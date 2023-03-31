@@ -58,8 +58,34 @@
 			background-color: #FF6666;
 			color: #FFFFFF;
 			padding: 10px;
-			text-align: center;
+			text-align: center;	
 		}
+		/* Style for iframe columns */
+		.iframe {
+			width: 33%;
+			height: 500px;
+			border: none;
+			float: left;
+		}
+		
+		/* Style for snowflakes */
+        #snow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        }
+        .snow {
+            position: absolute;
+            height: 10px;
+            width: 10px;
+            background-color: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+        }
 	</style>
 </head>
 <body>
@@ -87,13 +113,50 @@
       <p>目前最受歡迎的寵物是「粉紅兔子」，它是一種溫馴、可愛的寵物，非常適合初次養寵物的人。如果你想要養一只可愛的寵物，那就趕緊來我們的寵物商店看看吧！</p>
     </div>
   </div>
+  
+  <div id="snow-container"></div>
+  <iframe src="my_pet.html"></iframe>
+  <iframe src="pet_shop.html"></iframe>
+  <iframe src="my_pet.html"></iframe>
+  <iframe src="pet_shop.html"></iframe>
+
+  <audio src="background_music.mid" autoplay loop></audio>
+
   <div class="footer">
     <p>版權所有 © 2002 虛擬寵物社區</p>
-  </div>  
+  </div>
+
+  <script>
+	var container = document.getElementById('snow-container');
+	var width = container.clientWidth;
+	var height = container.clientHeight;
+	var maxSnowflakes = 50;
+	var snowflakes = [];
+
+	for (var i = 0; i < maxSnowflakes; i++) {
+		var snowflake = document.createElement('div');
+		snowflake.className = 'snow';
+		snowflake.style.left = Math.random() * width + 'px';
+		snowflake.style.top = Math.random() * height + 'px';
+		snowflake.speed = Math.random() * 5 + 1;
+		snowflake.style.opacity = Math.random() * 0.5 + 0.5;
+		container.appendChild(snowflake);
+		snowflakes.push(snowflake);
+	}
+
+	function moveSnowflakes() {
+		for (var i = 0; i < maxSnowflakes; i++) {
+			var snowflake = snowflakes[i];
+			snowflake.style.top = snowflake.offsetTop + snowflake.speed + 'px';
+			if (snowflake.offsetTop > height) {
+				snowflake.style.left = Math.random() * width + 'px';
+				snowflake.style.top = -10 + 'px';
+			}
+		}
+		requestAnimationFrame(moveSnowflakes);
+	}
+
+	moveSnowflakes();
+  </script>
 </body>
 </html>
-<script>
-// 在這裡寫 JavaScript 代碼
-// 添加一個彈出窗口來歡迎新用戶
-  alert("歡迎來到虛擬寵物社區！在這裡你可以找到你喜愛的寵物和朋友，快來體驗吧！");
-</script>
